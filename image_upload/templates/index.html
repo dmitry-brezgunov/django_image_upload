@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} Список изображений {% endblock %}
+{% block content %}
+<div>
+    <h1> Список изображений </h1>
+    {% if not images %}
+        <h2> Нет доступных изображений </h2>
+    {% else %}
+        {% for image in images %}
+            <a href="{% url 'detail' image.id %}"> {{ image.filename }} </a>
+            <p></p>
+        {% endfor %}
+    {% endif %}
+    <p></p>
+    <a href="{% url 'upload' %}">Добавить изображение</a>
+</div>
+{% endblock %}
