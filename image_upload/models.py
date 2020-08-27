@@ -6,7 +6,7 @@ from django.db import models
 
 
 class Image(models.Model):
-    '''Модель изображения хранящегося в базе.
+    '''Модель изображения, хранящегося в базе.
     original_image - поле с изображением оригинального размера
     url - ссылка на изображение, если оно загруженно со стороннего ресурса
     resized_image - поле с измененным изображением'''
@@ -17,11 +17,11 @@ class Image(models.Model):
 
     @property
     def filename(self):
-        '''Метод для вывода имени файл. Используется в шаблоне index.html'''
-        return os.path.basename(self.resized_image.url)
+        '''Метод для вывода имени файла. Используется в шаблонах'''
+        return os.path.basename(self.original_image.url)
 
     def get_remote_image(self):
-        '''Метод для загрузки изображение с url
+        '''Метод для загрузки изображения с url
         Срабатывает только если поле url заполнено
         и изображение отсутствует локально'''
         if self.url and not self.original_image:

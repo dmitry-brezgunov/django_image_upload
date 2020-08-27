@@ -3,12 +3,13 @@
 {% block content %}
 <div>
     <a href="{% url 'index' %}">Назад к списку</a>
-    <p></p>
-    <img src="{{ image.resized_image.url }}" />
+    <h1>{{ image.filename }}</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Отправить</button>
     </form>
+    <p></p>
+    <img src="{{ image.resized_image.url }}" />
 </div>
 {% endblock %}

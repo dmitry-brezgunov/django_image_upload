@@ -1,3 +1,6 @@
+from urllib.error import HTTPError
+from urllib.request import urlopen
+
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
@@ -15,6 +18,15 @@ class UploadImageForm(forms.ModelForm):
     def clean_url(self):
         '''Валидация поля url для проверки корректности ссылки'''
         url = self.cleaned_data.get("url")
+
+        if url == "":
+            return url
+
+        try:
+            urlopen(url)
+        except HTTPError:
+            raise ValidationError("Проверьте работоспособность ссылки")
+
         if url and not valid_url_mimetype(url):
             raise ValidationError(
              "Неверное расширение файла. "

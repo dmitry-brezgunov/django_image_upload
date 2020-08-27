@@ -11,7 +11,7 @@ from .utils import image_resize
 def index(request):
     '''Главная страница со списком изображений'''
     image_list = Image.objects.all()
-    return render(request, "index.html", {'images': image_list})
+    return render(request, "index.html", {"images": image_list})
 
 
 def upload_image(request):
@@ -24,10 +24,10 @@ def upload_image(request):
             # При первой загрузке изображения дублируем в поле resized_image
             # оригинальное изображение
             image.resized_image.save(name, image.original_image)
-            return redirect('detail', image_id=image.id)
+            return redirect("detail", image_id=image.id)
     else:
         form = UploadImageForm()
-    return render(request, "upload.html", {'form': form})
+    return render(request, "upload.html", {"form": form})
 
 
 @never_cache
@@ -40,7 +40,7 @@ def image_detail(request, image_id):
             width = form.cleaned_data["width"]
             height = form.cleaned_data["height"]
             image_resize(image, width, height)
-            return redirect('detail', image_id=image.id)
+            return redirect("detail", image_id=image.id)
     else:
         form = ChangeSizeForm()
     return render(request, "image.html", {"image": image, "form": form})
